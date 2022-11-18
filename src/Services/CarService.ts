@@ -26,7 +26,6 @@ class CarService {
   public async getById(id: string): Promise<Car | null> {
     const carODM = new CarODM();
     const car = await carODM.getById(id);
-    console.log('car no service:', car);
     if (car) {
       return this.createCarDomain(car);
     }
