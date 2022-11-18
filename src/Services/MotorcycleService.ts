@@ -35,17 +35,17 @@ class MotorcycleService {
     return motorcycle;
   }
 
-  // public async updateCar(id: string, data: ICar): Promise<Car | null> {
-  //   console.log('id no update da MotorcycleService:', id);
-  //   console.log('data no update da MotorcycleService:', data);
-  //   const carODM = new CarODM();
-  //   const updatedCar = await carODM.update(id, data);
-  //   console.log('updated car no service:', updatedCar);
-  //   if (updatedCar) {
-  //     return this.createCarDomain(updatedCar);
-  //   }
-  //   return updatedCar;
-  // }
+  public async updateMotorcycle(id: string, data: IMotorcycle): Promise<Motorcycle | null> {
+    console.log('id no update da MotorcycleService:', id);
+    console.log('data no update da MotorcycleService:', data);
+    const motorcycleODM = new MotorcycleODM();
+    const updatedMotorcycle = await motorcycleODM.update(id, data);
+    console.log('updated motorcycle no service:', updatedMotorcycle);
+    if (updatedMotorcycle) {
+      return this.createMotorcycleDomain(updatedMotorcycle);
+    }
+    return updatedMotorcycle;
+  }
 }
 
 export default MotorcycleService;
