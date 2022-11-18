@@ -21,10 +21,10 @@ class CarODM extends AbstractODM<ICar> {
   }
 
   public async getById(id: string): Promise<ICar | null> {
-    if (isValidObjectId(id)) {
-      return this.model.findById({ _id: id });
+    if (!isValidObjectId(id)) {
+      throw new Error('Invalid mongo id');
     }
-    throw new Error('Invalid mongo id');
+    return this.model.findById({ _id: id });
   }
 }
 

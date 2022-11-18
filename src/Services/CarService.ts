@@ -16,6 +16,7 @@ class CarService {
   public async getAll(): Promise<Car[]> {
     const carODM = new CarODM();
     const allCars = await carODM.getAll();
+    // console.log('allCars no service:', allCars);
     if (allCars.length) {
       const result = allCars.map((car) => this.createCarDomain(car));
       return result;
@@ -30,6 +31,18 @@ class CarService {
       return this.createCarDomain(car);
     }
     return car;
+  }
+
+  public async updateCar(id: string, data: ICar): Promise<Car | null> {
+    console.log('id no update da carService:', id);
+    console.log('data no update da carService:', data);
+    const carODM = new CarODM();
+    const updatedCar = await carODM.update(id, data);
+    console.log('updated car no service:', updatedCar);
+    if (updatedCar) {
+      return this.createCarDomain(updatedCar);
+    }
+    return updatedCar;
   }
 }
 
