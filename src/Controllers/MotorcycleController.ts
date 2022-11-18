@@ -29,33 +29,32 @@ class MotorcycleController {
 
     try {
       const newMotorcycle = await this.service.create(motorcycle);
-      console.log('new motorcycle no controller:', newMotorcycle);
       return this.res.status(201).json(newMotorcycle);
     } catch (error) {
       this.next(error);
     }
   }
 
-  // public async getAll() {
-  //   const allCars = await this.service.getAll();
-  //   // console.log('all cars em getAll no controller:', allCars);
-  //   return this.res.status(200).json(allCars);
-  // }
+  public async getAll() {
+    const allMotorcycles = await this.service.getAll();
+    console.log('all Motorcycles em getAll no controller:', allMotorcycles);
+    return this.res.status(200).json(allMotorcycles);
+  }
 
-  // public async getById() {
-  //   try {
-  //     const { id } = this.req.params;
-  //     // console.log('id no controller:', id);
-  //     const car = await this.service.getById(id);
-  //     // console.log('car no controller:', car);
-  //     if (!car) {
-  //       return this.res.status(404).json({ message: 'Car not found' });
-  //     }
-  //     return this.res.status(200).json(car);
-  //   } catch (error) {
-  //     return this.res.status(422).json({ message: 'Invalid mongo id' });
-  //   }
-  // }
+  public async getById() {
+    try {
+      const { id } = this.req.params;
+      console.log('id no controller:', id);
+      const motorcycle = await this.service.getById(id);
+      console.log('motorcyle no controller:', motorcycle);
+      if (!motorcycle) {
+        return this.res.status(404).json({ message: 'Motorcycle not found' });
+      }
+      return this.res.status(200).json(motorcycle);
+    } catch (error) {
+      return this.res.status(422).json({ message: 'Invalid mongo id' });
+    }
+  }
   
   // public async updateCar() {
   //   try {

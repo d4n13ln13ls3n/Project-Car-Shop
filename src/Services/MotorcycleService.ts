@@ -10,29 +10,30 @@ class MotorcycleService {
   public async create(motorcycle: IMotorcycle) {
     const motorcycleODM = new MotorcycleODM();
     const newMotorcycle = await motorcycleODM.create(motorcycle);
-    console.log('new motorcycle no service:', newMotorcycle);
+    // console.log('new motorcycle no service:', newMotorcycle);
     return this.createMotorcycleDomain(newMotorcycle);
   }
 
-  // public async getAll(): Promise<Car[]> {
-  //   const carODM = new CarODM();
-  //   const allCars = await carODM.getAll();
-  //   // console.log('allCars no service:', allCars);
-  //   if (allCars.length) {
-  //     const result = allCars.map((car) => this.createCarDomain(car));
-  //     return result;
-  //   }
-  //   return [];
-  // }
+  public async getAll(): Promise<Motorcycle[]> {
+    const motorcycleODM = new MotorcycleODM();
+    const allMotorcycles = await motorcycleODM.getAll();
+    console.log('allmotorcycles no service:', allMotorcycles);
+    if (allMotorcycles.length) {
+      const result = allMotorcycles.map((motorcycle) => this.createMotorcycleDomain(motorcycle));
+      return result;
+    }
+    return [];
+  }
 
-  // public async getById(id: string): Promise<Car | null> {
-  //   const carODM = new CarODM();
-  //   const car = await carODM.getById(id);
-  //   if (car) {
-  //     return this.createCarDomain(car);
-  //   }
-  //   return car;
-  // }
+  public async getById(id: string): Promise<Motorcycle | null> {
+    const motorcycleODM = new MotorcycleODM();
+    const motorcycle = await motorcycleODM.getById(id);
+    console.log('motorcycles no service:', motorcycle);
+    if (motorcycle) {
+      return this.createMotorcycleDomain(motorcycle);
+    }
+    return motorcycle;
+  }
 
   // public async updateCar(id: string, data: ICar): Promise<Car | null> {
   //   console.log('id no update da MotorcycleService:', id);
