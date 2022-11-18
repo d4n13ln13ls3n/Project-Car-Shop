@@ -22,7 +22,7 @@ describe('Deveria buscar um carro por id', function () {
     sinon.stub(Model, 'findById').resolves(CarOutput);
 
     const service = new CarService();
-    const result = await service.getById('634852326b35b59438fbea2b');
+    const result = await service.getById('634852326b35b59438fbea2f');
 
     expect(result).to.be.deep.equal(CarOutput);
   });
