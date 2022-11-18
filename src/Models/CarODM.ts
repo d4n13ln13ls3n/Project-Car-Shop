@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { Schema, isValidObjectId } from 'mongoose';
 import ICar from '../Interfaces/ICar';
 import AbstractODM from './AbstractODM';
 
@@ -14,6 +14,17 @@ class CarODM extends AbstractODM<ICar> {
       seatsQty: { type: Number, required: true },
     });
     super(schema, 'Car');
+  }
+
+  public async getAll(): Promise<ICar[]> {
+    return this.model.find({});
+  }
+
+  public async getById(id: string): Promise<ICar | null> {
+    if (isValidObjectId(id)) {
+      return this.model.findById({ _id: id });
+    }
+    throw new Error('Invalid mongo id');
   }
 }
 
