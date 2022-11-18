@@ -28,7 +28,6 @@ class MotorcycleService {
   public async getById(id: string): Promise<Motorcycle | null> {
     const motorcycleODM = new MotorcycleODM();
     const motorcycle = await motorcycleODM.getById(id);
-    console.log('motorcycles no service:', motorcycle);
     if (motorcycle) {
       return this.createMotorcycleDomain(motorcycle);
     }
