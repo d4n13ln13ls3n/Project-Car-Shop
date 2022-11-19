@@ -32,7 +32,7 @@ class MotorcycleODM extends AbstractODM<IMotorcycle> {
     if (!isValidObjectId(id)) {
       throw new Error('Invalid mongo id');
     }
-    return this.model.deleteOne({ _id: id });
+    return this.model.findByIdAndDelete({ _id: id });
   }
 }
 

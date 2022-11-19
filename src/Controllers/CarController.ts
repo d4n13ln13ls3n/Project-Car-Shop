@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { isValidObjectId } from 'mongoose';
 import ICar from '../Interfaces/ICar';
 import CarService from '../Services/CarService';
 
@@ -7,6 +8,8 @@ class CarController {
   private res: Response;
   private next: NextFunction;
   private service: CarService;
+  readonly NOT_FOUND = 'Car not found';
+  readonly INVALID_ID = 'Invalid mongo id';
 
   constructor(req: Request, res: Response, next: NextFunction) {
     this.req = req;
@@ -37,39 +40,49 @@ class CarController {
 
   public async getAll() {
     const allCars = await this.service.getAll();
-    // console.log('all cars em getAll no controller:', allCars);
     return this.res.status(200).json(allCars);
   }
 
   public async getById() {
     try {
       const { id } = this.req.params;
-      // console.log('id no controller:', id);
       const car = await this.service.getById(id);
-      // console.log('car no controller:', car);
       if (!car) {
-        return this.res.status(404).json({ message: 'Car not found' });
+        return this.res.status(404).json({ message: this.NOT_FOUND });
       }
       return this.res.status(200).json(car);
     } catch (error) {
-      return this.res.status(422).json({ message: 'Invalid mongo id' });
+      return this.res.status(422).json({ message: this.INVALID_ID });
     }
   }
   
   public async updateCar() {
     try {
       const { id } = this.req.params;
-      console.log('id no update em controller:', id);
-      // const { updatedCar } = this.req.body;
-      console.log('this.req.body:', this.req.body);
       const updatedCar = await this.service.updateCar(id, this.req.body);
-      console.log('updated car no controller:', updatedCar);
       if (!updatedCar) {
-        return this.res.status(404).json({ message: 'Car not found' });
+        return this.res.status(404).json({ message: this.NOT_FOUND });
       }
       return this.res.status(200).json(updatedCar);
     } catch (error) {
-      return this.res.status(422).json({ message: 'Invalid mongo id' });
+      return this.res.status(422).json({ message: this.INVALID_ID });
+    }
+  }
+
+  public async deleteCar() {
+    const { id } = this.req.params;
+    try {
+      if (!isValidObjectId(id)) {
+        return this.res.status(422).json({ message: this.INVALID_ID });
+      }
+      const deletedCar = await this.service.getById(id);
+      if (!deletedCar) {
+        return this.res.status(404).json({ message: this.NOT_FOUND });
+      }
+      await this.service.deleteCar(id);
+      return this.res.status(204).end();
+    } catch (error) {
+      this.next(error);
     }
   }
 }

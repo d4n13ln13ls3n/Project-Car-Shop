@@ -34,15 +34,17 @@ class CarService {
   }
 
   public async updateCar(id: string, data: ICar): Promise<Car | null> {
-    console.log('id no update da carService:', id);
-    console.log('data no update da carService:', data);
     const carODM = new CarODM();
     const updatedCar = await carODM.update(id, data);
-    console.log('updated car no service:', updatedCar);
     if (updatedCar) {
       return this.createCarDomain(updatedCar);
     }
     return updatedCar;
+  }
+
+  public async deleteCar(id: string) {
+    const carODM = new CarODM();
+    await carODM.deleteCar(id);
   }
 }
 

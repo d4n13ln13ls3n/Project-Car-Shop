@@ -43,12 +43,7 @@ class MotorcycleService {
 
   public async deleteMotorcycle(id: string) {
     const motorcycleODM = new MotorcycleODM();
-    const deletedMotorcycle = await motorcycleODM.getById(id);
-    // console.log('deletedMotorcycle no service:', deletedMotorcycle);
-    if (deletedMotorcycle) {
-      await motorcycleODM.deleteMotorcycle(id);
-    }
-    return null;
+    await motorcycleODM.deleteMotorcycle(id);
   }
 }
 

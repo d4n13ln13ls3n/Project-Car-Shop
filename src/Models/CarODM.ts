@@ -26,6 +26,13 @@ class CarODM extends AbstractODM<ICar> {
     }
     return this.model.findById({ _id: id });
   }
+
+  public async deleteCar(id: string) {
+    if (!isValidObjectId(id)) {
+      throw new Error('Invalid mongo id');
+    }
+    return this.model.findByIdAndDelete({ _id: id });
+  }
 }
 
 export default CarODM;

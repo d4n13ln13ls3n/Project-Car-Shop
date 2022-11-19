@@ -24,10 +24,10 @@ routes.put(
   (req, res, next) => new CarController(req, res, next).updateCar(),
 );
 
-// routes.delete(
-//   '/cars/:id',
-//   (req, res, next) => new CarController(req, res, next).deleteCar(),
-// );
+routes.delete(
+  '/cars/:id',
+  (req, res, next) => new CarController(req, res, next).deleteCar(),
+);
 
 routes.get(
   '/motorcycles',
@@ -35,6 +35,7 @@ routes.get(
 );
   
 routes.get(
+  // eslint-disable-next-line sonarjs/no-duplicate-string
   '/motorcycles/:id',
   (req, res, next) => new MotorcycleController(req, res, next).getById(),
 );
@@ -50,7 +51,7 @@ routes.put(
 );
 
 routes.delete(
-  '/cars/:id',
+  '/motorcycles/:id',
   (req, res, next) => new MotorcycleController(req, res, next).deleteMotorcycle(),
 );
 

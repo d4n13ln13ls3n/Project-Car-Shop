@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { isValidObjectId } from 'mongoose';
 import IMotorcycle from '../Interfaces/IMotorcycle';
 import MotorcycleService from '../Services/MotorcycleService';
 
@@ -69,17 +70,19 @@ class MotorcycleController {
   }
 
   public async deleteMotorcycle() {
+    const { id } = this.req.params;
     try {
-      const { id } = this.req.params;
+      if (!isValidObjectId(id)) {
+        return this.res.status(422).json({ message: this.INVALID_ID });
+      }
       const deletedMotorcycle = await this.service.getById(id);
-      // console.log('deletedMotorcycle no controller:', deletedMotorcycle);
-      await this.service.deleteMotorcycle(id);
       if (!deletedMotorcycle) {
         return this.res.status(404).json({ message: this.NOT_FOUND });
       }
+      await this.service.deleteMotorcycle(id);
       return this.res.status(204).end();
     } catch (error) {
-      return this.res.status(422).json({ message: this.INVALID_ID });
+      this.next(error);
     }
   }
 }
