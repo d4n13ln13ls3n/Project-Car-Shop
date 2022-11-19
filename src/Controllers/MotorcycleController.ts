@@ -72,10 +72,10 @@ class MotorcycleController {
     try {
       const { id } = this.req.params;
       const deletedMotorcycle = await this.service.getById(id);
-      console.log('deletedMotorcycle no controller:', deletedMotorcycle);
+      // console.log('deletedMotorcycle no controller:', deletedMotorcycle);
       await this.service.deleteMotorcycle(id);
       if (!deletedMotorcycle) {
-        return this.res.status(404).json({ message: 'não encontra id' });
+        return this.res.status(404).json({ message: this.NOT_FOUND });
       }
       return this.res.status(204).end();
     } catch (error) {
